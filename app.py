@@ -51,4 +51,3 @@ def modules(groupsTrier):
 groups = demandeGroupes()
 groupsTrier = groupeTaleau(groups)
 modules(groupsTrier)
-
