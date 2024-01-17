@@ -36,17 +36,26 @@ def groupeTaleau(groups):
      dataTD = data.query("Groupe == @td")
      tp = groups[1]
      dataTP = data.query("Groupe == @tp")
-
+     
      courGroup = []
      
-     courGroup.append(dataTD)
-     courGroup.append(dataTP)
+     for lineTD in range(len(dataTD)):
+          courGroup.append(dataTD.iloc[lineTD, :])
+          
+     for lineTP in range(len(dataTP)):
+          courGroup.append(dataTP.iloc[lineTP, :])
+          
+     return pd.DataFrame(courGroup)
 
-     return courGroup
-     
 def modules(groupsTrier):
-     for cpt in range(len(groupsTrier[0])):
-          print(groupsTrier[0].Summary)
+
+     # Regrouper par MATIERE et agréger les heures de début et de fin
+     moduleDateMin = groupsTrier.groupby('Summary').agg({'Date': 'min'})
+     moduleDateMax = groupsTrier.groupby('Summary').agg({'Date': 'min'})
+     
+     # Afficher le résultat
+     print(moduleDateMin)
+     print(moduleDateMax)
 
 groups = demandeGroupes()
 groupsTrier = groupeTaleau(groups)

@@ -1,11 +1,21 @@
 import pandas as pd
-import numpy as np
 
-dates = ["April-10", "April-11", "April-12", "April-13", "April-14", "April-16"]
-sales = [200, 300, 400, 200, 300, 300]
-prices = [3, 1, 2, 4, 3, 2]
+# Créer un DataFrame avec vos données
+data = {'MATIERE': ['cour1', 'cour2', 'cour1', 'cour2'],
+        'HEURE DEBUT': ['1h', '2h', '2h', '5h'],
+        'HEURE FIN': ['2h', '3h', '3h', '6h']}
+df = pd.DataFrame(data)
 
-df = pd.DataFrame({"Date": dates, "Sales": sales, "Price": prices})
+# Convertir les colonnes HEURE DEBUT et HEURE FIN en datetime pour faciliter la manipulation
+df['HEURE DEBUT'] = pd.to_datetime(df['HEURE DEBUT'], format='%Hh')
+df['HEURE FIN'] = pd.to_datetime(df['HEURE FIN'], format='%Hh')
 
-filtered_df = df.query("Sales == 300")
-print(filtered_df)
+# Regrouper par MATIERE et agréger les heures de début et de fin
+result_df = df.groupby('MATIERE').agg({'HEURE DEBUT': 'min', 'HEURE FIN': 'max'}).reset_index()
+
+# Convertir les colonnes HEURE DEBUT et HEURE FIN en format d'heure
+result_df['HEURE DEBUT'] = result_df['HEURE DEBUT'].dt.strftime('%Hh')
+result_df['HEURE FIN'] = result_df['HEURE FIN'].dt.strftime('%Hh')
+
+# Afficher le résultat
+print(result_df)
