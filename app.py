@@ -49,13 +49,21 @@ def groupeTaleau(groups):
 
 def modules(groupsTrier):
 
+     # Exclure les lignes avec "Exam" dans la colonne sumary
+     groupsTrier = groupsTrier[~groupsTrier['Summary'].str.contains('Exam')]
+
      # Regrouper par MATIERE et agréger les heures de début et de fin
      moduleDateMin = groupsTrier.groupby('Summary').agg({'Date': 'min'})
-     moduleDateMax = groupsTrier.groupby('Summary').agg({'Date': 'min'})
+     moduleDateMax = groupsTrier.groupby('Summary').agg({'Date': 'max'})
+
+     moduleDateMin.rename(columns = {'Date':'DtStart'}, inplace = True)
+     moduleDateMax.rename(columns = {'Date':'DtFin'}, inplace = True)
      
+     # Fusionner les DataFrames pour créer toutModules
+     toutModules = pd.merge(moduleDateMin, moduleDateMax[['DtFin']], left_index=True, right_index=True)
+
      # Afficher le résultat
-     print(moduleDateMin)
-     print(moduleDateMax)
+     print(toutModules)
 
 groups = demandeGroupes()
 groupsTrier = groupeTaleau(groups)
