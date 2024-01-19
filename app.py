@@ -5,6 +5,13 @@ def demandeGroupes():
      tp = input("Quel est votre groupe (1ATP1, 1ATP2, 1ATP3, 1ATP4, 1ATP5) ? ")
      groups = []
      
+     while td == "1ATDA" and td == "1ATDB" and td == "1ATDC":
+          td = input("Erreur, veuillez saisir un groupe valide (1ATDA, 1ATDB, 1ATDC) ? ")
+
+
+     while tp == "1ATP1" and tp == "1ATP2" and tp == "1ATP3" and tp == "1ATP4" and tp == "1ATP5":
+          td = input("Erreur, veuillez saisir un groupe valide (1ATDA, 1ATDB, 1ATDC) ? ")
+
      groupeTD = ""
      if td == "1ATDA":
           groupeTD = " 1ATDA "
