@@ -9,40 +9,47 @@ def demandeGroupes():
      tp = input("Quel est votre groupe (1ATP1, 1ATP2, 1ATP3, 1ATP4, 1ATP5) ? ")
      groups = []
      
-     #demande de saisir à nouveau le groupe de TD si il y a une erreur
-     while td == "1ATDA" and td == "1ATDB" and td == "1ATDC":
-          td = input("Erreur, veuillez saisir un groupe valide (1ATDA, 1ATDB, 1ATDC) ? ")
-
-     #demande de saisir à nouveau le groupe de TP si il y a une erreur
-     while tp == "1ATP1" and tp == "1ATP2" and tp == "1ATP3" and tp == "1ATP4" and tp == "1ATP5":
-          td = input("Erreur, veuillez saisir un groupe valide (1ATDA, 1ATDB, 1ATDC) ? ")
-
-     #formatage du groupe de TD saisie par l'utilisateur
      groupeTD = ""
-     if td == "1ATDA":
-          groupeTD = " 1ATDA "
-     elif td == "1ATDB":
-          groupeTD = " 1ATDB "
-     else:
-          groupeTD = " 1ATDC "
-
-     #formatage du groupe de TP saisie par l'utilisateur
      groupeTP = ""
-     if tp[1] == "1ATP1":
-          groupeTP = " 1ATP1 "
-     elif tp[1] == "1ATP2":
-          groupeTP = " 1ATP2 "
-     elif tp[1] == "1ATP3":
-          groupeTP = " 1ATP3 "
-     elif tp[1] == "1ATP4":
-          groupeTP = " 1ATP4 "
-     else:
-          groupeTP = " 1ATP5 "
      
-     groups.append(groupeTD) #ajouts du groupe de TD après formatage dans le tableau "groups"
-     groups.append(groupeTP) #ajouts du groupe de TP après formatage dans le tableau "groups"
-     
-     return groups
+
+     #formatage des groupe de TD et TP saisie par l'utilisateur et gestion des erreur
+     if td == "1ATDA": #SI le groupe de TD est le TDA
+          if tp == "1ATP1" or tp == "1ATP2": #SI le groupe de TP est le TP1 ou TP2
+               groupeTD = " 1ATDA " #on affecte à la variable "groupeTD" le formatage de "1ATDA"
+               if tp == "1ATP1": #SI le groupe de TP est le TP1
+                    groupeTP = " 1ATP1 "
+               else: #SINON le groupe de TP est le TP2
+                    groupeTP = " 1ATP2 "
+               
+               groups.append(groupeTD) #ajouts du groupe de TD après formatage dans le tableau "groups"
+               groups.append(groupeTP) #ajouts du groupe de TP après formatage dans le tableau "groups"
+          else: #SINON le groupe de TP n'est pas le 1 ou 2 alors erreur de TD
+               print("Erreur de saisie, veuillez taper un groupe valide ou faire correspondre le groupe de TD au groupe de TP (Ex : 1ATDA/1ATP1 ou 1ATDA/1ATP2)")
+     elif td == "1ATDB": #SI le groupe de TD est le TDB
+          if tp == "1ATP3" or tp == "1ATP4": #SI le groupe de TP est le TP3 ou TP4
+               groupeTD = " 1ATDB " #on affecte à la variable "groupeTD" le formatage de "1ATDB"
+               if tp == "1ATP3": #SI le groupe de TP est le TP3    
+                    groupeTP = " 1ATP3 "
+               else:  #SINON le groupe de TP est le TP4
+                    groupeTP = " 1ATP4 "
+                    
+               groups.append(groupeTD) #ajouts du groupe de TD après formatage dans le tableau "groups"
+               groups.append(groupeTP) #ajouts du groupe de TP après formatage dans le tableau "groups"
+          else: #SINON le groupe de TP n'est pas le 3 ou 4 alors erreur de TD
+               print("Erreur de saisie, veuillez taper un groupe valide ou faire correspondre le groupe de TD au groupe de TP (Ex : 1ATDB/1ATP3 ou 1ATDB/1ATP4)")
+     elif td == "1ATDC": #SI le groupe de TD est le TDC
+          if tp == "1ATP5": #SI le groupe de TP est le TP5
+               groupeTD = " 1ATDC " #on affecte à la variable "groupeTD" le formatage de "1ATDC"
+               groupeTP = " 1ATP5 " #SI le groupe de TP est le TP5
+               
+               groups.append(groupeTD) #ajouts du groupe de TD après formatage dans le tableau "groups"
+               groups.append(groupeTP) #ajouts du groupe de TP après formatage dans le tableau "groups"
+          else: #SINON le groupe de TP n'est pas le 5 alors erreur de TD
+               print("Erreur de saisie, veuillez taper un groupe valide ou faire correspondre le groupe de TD au groupe de TP (Ex : 1ATDC/1ATP5)")     
+
+     if len(groups) == 2: #SI la logueur du tableau vaut 2 
+          return groups
 
 def groupeTaleau(groups):
      """Fonction qui permet de crée un nouveau dataframe et le retourne avec seulement les cour d'un TD, TP, CM
@@ -106,6 +113,7 @@ def modules(groupsTrier):
      print(toutModules)
 
 groups = demandeGroupes()
-groupsTrier = groupeTaleau(groups)
-modules(groupsTrier)
+if groups: #SI groups existe et n'est pas vide
+     groupsTrier = groupeTaleau(groups)
+     modules(groupsTrier)
 
