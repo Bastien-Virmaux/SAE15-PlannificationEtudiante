@@ -62,14 +62,14 @@ def groupeTaleau(groups):
      data = pd.DataFrame(pd.read_csv("ADECAL_officiel.csv"))
 
      #Enregistrement dans une variable "dataTD" de l'ensemble des cours ayant comme groupe le td choisi par l'utilisateur
-     td = groups[0]
-     dataTD = data.query("Groupe == @td") #la méthode ".query" (s'implique sur un objet de type dataframe) permet de selectionner toutes les lignes d'un dataframe respectant la condition entre guillement (@ => référence à une variable)
+     td = "TDC"
+     dataTD = data.query("Type == @td") #la méthode ".query" (s'implique sur un objet de type dataframe) permet de selectionner toutes les lignes d'un dataframe respectant la condition entre guillement (@ => référence à une variable)
      #Enregistrement dans une variable "dataTP" de l'ensemble des cours ayant comme groupe le tp choisi par l'utilisateur
-     tp = groups[1]
-     dataTP = data.query("Groupe == @tp")
+     tp = "TP5"
+     dataTP = data.query("Type == @tp")
      #Enregistrement dans une variable "dataCM" de l'ensemble des cours en CM (commun à tout TD ou TP)
-     cm = " 1A "
-     dataCM = data.query("Groupe == @cm")
+     cm = "Cours"
+     dataCM = data.query("Type == @cm")
      
      courGroup = []
      
@@ -116,4 +116,3 @@ groups = demandeGroupes()
 if groups: #SI groups existe et n'est pas vide
      groupsTrier = groupeTaleau(groups)
      modules(groupsTrier)
-
